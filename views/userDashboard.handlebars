@@ -1,0 +1,56 @@
+<div style="
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  font-family: Arial, sans-serif;
+">
+  <h1 style="color: #343a40; margin-bottom: 1rem;">
+    Welcome, {{user.name}}
+  </h1>
+
+  <h2 style="color: #495057; margin-bottom: 2rem;">
+    Your Devices
+  </h2>
+
+  <div style="
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    justify-items: center;
+  ">
+    {{#each devices}}
+      <div style="
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        padding: 1rem 1.5rem;
+        width: 100%;
+        max-width: 300px;
+        text-align: left;
+      ">
+        <h3 style="margin-top: 0; color: #007bff;">{{this.name}}</h3>
+        <p style="margin: 0; font-size: 0.9rem; color: #6c757d;">
+          Type: {{this.type}}
+        </p>
+
+        {{#if this.installedApps.length}}
+          <h4 style="margin-top: 1rem; font-size: 1rem; color: #343a40;">
+            Installed Apps
+          </h4>
+          <ul style="padding-left: 1.2rem; margin: 0;">
+            {{#each this.installedApps}}
+              <li style="font-size: 0.9rem; color: #495057;">
+                <strong>{{this.name}}</strong> 
+                <span style="color: #6c757d;">— {{this.category}}</span>
+              </li>
+            {{/each}}
+          </ul>
+        {{else}}
+          <p style="margin-top: 1rem; font-size: 0.9rem; color: #6c757d;">
+            No apps installed.
+          </p>
+        {{/if}}
+      </div>
+    {{/each}}
+  </div>
+</div>

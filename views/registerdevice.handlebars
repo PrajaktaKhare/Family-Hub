@@ -1,0 +1,90 @@
+    <!-- views/register.hbs -->
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f7f8;
+    margin: 0;
+    padding: 40px 0;
+  }
+  .container {
+    max-width: 400px;
+    margin: auto;
+    background: #fff;
+    padding: 30px 40px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+  }
+  h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+  }
+  label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #555;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+  }
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="password"]:focus,
+  select:focus {
+    border-color: #4a90e2;
+    outline: none;
+  }
+  button {
+    width: 100%;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #357ABD;
+  }
+</style>
+
+<div class="container">
+  <h2>Register New Device</h2>
+  <form action="/api/devices/registerDevice" method="POST">
+     <label for="id">Device id:</label>
+    <input type="text" id="id" name="id" required />
+
+    <label for="name">Device Name:</label>
+    <input type="text" id="name" name="name" required />
+
+    <label for="type">type:</label>
+    <input type="text" id="type" name="type" required />
+
+    <label for="os">OS:</label>
+    <input type="text" id="os" name="os" required />
+
+    <div>
+    <label for="owner">Owner:</label>
+    <select id="owner" name="owner" required>
+      <option value="" disabled selected>Select a user</option>
+      {{#each users}}
+        <option value="{{this._id}}">{{this.name}}</option>
+      {{/each}}
+    </select>
+  </div>
+
+    <button type="submit">Register</button>
+  </form>
+</div>
