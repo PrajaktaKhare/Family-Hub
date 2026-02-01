@@ -4,7 +4,8 @@
 
 ---
 
-## Read the full project blog on Medium: [https://medium.com/p/d200645582e6?postPublishedType=initial]
+## Read the full project blog on Medium:
+[https://medium.com/p/d200645582e6?postPublishedType=initial]
 
 ##  Features
 
