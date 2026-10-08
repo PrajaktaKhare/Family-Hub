@@ -40,6 +40,9 @@ const deviceSchema = new Schema({
     }
 });
 
+// ADD THE INDEX And 1 means ascending index
+deviceSchema.index({ owner: 1 });
+
 const Device = model('Device', deviceSchema);
 
 export default Device;
