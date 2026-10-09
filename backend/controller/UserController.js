@@ -1,5 +1,6 @@
 import User from '../models/User.js'
 import Device from '../models/Device.js';
+import bcrypt from 'bcryptjs';
 
 export const registerUser = async (req, res, next) => {
     const roles = [
@@ -21,12 +22,13 @@ export const registerUser = async (req, res, next) => {
 }
 
 export const saveUser = async (req, res, next) => {
-    
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
     try {
         const newUser = await User.create({
             name: req.body.name,
             email: req.body.email,
-            password: req.body.password,
+            password: hashedPassword,
             role: req.body.role,
             devices: []
         });
@@ -34,7 +36,16 @@ export const saveUser = async (req, res, next) => {
         console.log("registered new user successfully!!");
         res.format({
             'application/json': () => {
-                res.status(200).json({ user: newUser, message: "registered new user successfully!!", redirect: "/login" }); // JSON response for react
+                res.status(200).json({
+                    user: {
+                        id: newUser._id,
+                        name: newUser.name,
+                        email: newUser.email,
+                        role: newUser.role
+                    },
+                    message: "registered new user successfully!!",
+                    redirect: "/login"
+                });
             },
             'text/html': () => {
                 res.render('login');
