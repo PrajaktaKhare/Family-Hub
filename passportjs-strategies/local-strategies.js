@@ -1,6 +1,7 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local"
 import User from "../backend/models/User.js";
+import bcrypt from 'bcryptjs';
 
 export default function configureLocalStrategy(passport) {
     passport.use(new LocalStrategy({ usernameField: 'email' },
@@ -11,8 +12,15 @@ export default function configureLocalStrategy(passport) {
                 const user = await User.findOne({ email });
                 if (!user) return done(null, false, { message: 'Invalid email or password' });
 
-                if (password !== user.password) { // ideally hash+compare
-                    return done(null, false, { message: 'Invalid email or password' });
+                const passwordMatches = await bcrypt.compare(
+                    password,
+                    user.password
+                );
+
+                if (!passwordMatches) {
+                    return done(null, false, {
+                        message: 'Invalid email or password'
+                    });
                 }
 
                 return done(null, user);
