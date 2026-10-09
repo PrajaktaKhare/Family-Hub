@@ -81,7 +81,9 @@ export const showAlldevices = async (req, res) => {
 }
 export const getDevice = async (req, res, next) => {
     try {
-        const devices = await Device.find({ owner: req.params.userId });
+        const devices = await Device.find({ owner: req.params.userId })    
+            .select('id name type os installedApps lastSync')
+            .lean();
         console.log(devices);
         
         res.json(devices);
