@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import App from '../backend/models/App.js';
 import User from '../backend/models/User.js'
+import bcrypt from 'bcryptjs';
 
 dotenv.config();
 console.log(process.env.DB_URL);
@@ -53,10 +54,21 @@ export async function feedUsers() {
     try{
         const count = await User.countDocuments();
         if(count == 0){
-            const initialUsers = [
-                {name: 'John Doe', email: 'john@fh.com', password: '123456', role:'Admin'},
-                {name: 'Mary Jones', email: 'mary@fh.com', password: '123456', role:'User'},
+          const hashedPassword = await bcrypt.hash('123456', 10);
 
+            const initialUsers = [
+                {
+                    name: 'John Doe',
+                    email: 'john@fh.com',
+                    password: hashedPassword,
+                    role: 'Admin'
+                },
+                {
+                    name: 'Mary Jones',
+                    email: 'mary@fh.com',
+                    password: hashedPassword,
+                    role: 'user'
+                }
             ];
             await User.insertMany(initialUsers);
             console.log("Inserted initial users");
